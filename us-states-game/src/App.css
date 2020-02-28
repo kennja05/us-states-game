@@ -9,7 +9,6 @@
 .map {
   grid-column: 1;
   grid-row: 1;
-  
   position: relative;
   z-index: 1;
   background-size: contain;
@@ -36,7 +35,7 @@
   left: 9%;
   top: 6%;
   z-index: 2;
-  transition: all 5s ease-in-out
+  transition: all 2s ease-in-out
 }
 
 .App-logo {

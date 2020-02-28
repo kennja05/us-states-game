@@ -5,8 +5,8 @@ import mapImage from './blank-usa-map.jpg'
 class App extends React.Component {
 
   state = {
-    top: 11,
-    left: 9
+    top: 67,
+    left: 67
   }
   render() {
     const alienStyle = {
@@ -39,22 +39,18 @@ class App extends React.Component {
     const width = event.target.offsetWidth
     const height = event.target.offsetHeight
 
-    console.log('X: ', x)
-    console.log('Y: ', y)
-    console.log('width: ', width)
-    console.log('height: ', height)
+    // console.log('X: ', x)
+    // console.log('Y: ', y)
+    // console.log('width: ', width)
+    // console.log('height: ', height)
 
-    const relativeX = x / width
-    const relativeY = y / height
+    const relativeX = x / width * 100 - 3
+    const relativeY = y / height * 100 - 3
     console.log(relativeX, relativeY)
 
-    this.setState({top: relativeY*100 - 3, left: relativeX*100 - 3})
+    this.setState({top: relativeY, left: relativeX})
   }
 
-  onChange = event => {
-    console.log(event.target.height)
-    console.log(event.target.width)
-  }
 }
 
 export default App;
