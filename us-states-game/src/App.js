@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import Sidebar from './components/sidebar/Sidebar'
+// import Sidebar from './components/sidebar/Sidebar'
 import Map from './Map'
 
 class App extends React.Component {
 
   state = {
-    top: 67,
-    left: 67,
+    top: 92,
+    left: 7,
     usStates: []
   }
 
@@ -23,7 +23,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <Map usStates={this.state.usStates} />
-        <Sidebar positionTop={this.state.top} positionLeft={this.state.left} allStates={this.state.usStates}/>
+        <div className="sidebar" />
+        {/* <Sidebar positionTop={this.state.top} positionLeft={this.state.left} allStates={this.state.usStates}/> */}
       </div>
     );
   }
