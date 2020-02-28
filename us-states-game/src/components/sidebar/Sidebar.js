@@ -1,18 +1,18 @@
 import React from 'react' 
-import CorrectAnswer from './correctAnswer'
-import Pregame from './pregame'
-import Endgame from './endgame'
-import DisplayQuestion from './displayQuestion'
+import CorrectAnswer from './CorrectAnswer'
+import Pregame from './Pregame'
+import Endgame from './Endgame'
+import DisplayQuestion from './DisplayQuestion'
 
 export default class Sidebar extends React.Component {
 
-    //the goal of this state is to condi
+    //the goal of this state is to conditionally render the subcomponents of sidebar
     state={
         guessedStates: [],
-        displayPregame: false,
         displayQuestion: true, 
         displayStateInfo: false,
-        displayEndgame: false
+        displayEndgame: false,
+        displayPregame: false,
     }
 
     //this is passed down to the displayQuestion component
@@ -23,14 +23,29 @@ export default class Sidebar extends React.Component {
         })
     }
 
-    //this button should handle the next quesi
+    //this will be passed down to the correctAnswer component to move to the next question or complete game if applicable
+    handleNextButtonClick = () => {
+        if (this.state.guessedStates.length < 50) {
+            this.setState({
+                displayQuestion: true,
+                displayStateInfo: false
+            })
+        } else {
+            this.setState({
+                displayStateInfo: false,
+                displayEndgame: true
+            })
+        }
+    }
 
     render() {
         return(
             <div className='sidebar'>
 
                 {(this.state.displayQuestion) && <DisplayQuestion handleCorrectAnswer={this.handleCorrectAnswer} stateList={this.props.allStates}/>}
-                {(this.state.displayStateInfo) && <CorrectAnswer />}
+                {(this.state.displayStateInfo) && <CorrectAnswer handleNextButtonClick={this.handleNextButtonClick}/>}
+                {(this.state.displayEngame) && <Endgame />}
+                {(this.state.displayPregame) && <Pregame />}
 
 
             </div>
