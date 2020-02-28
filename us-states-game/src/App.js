@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-// import Sidebar from './components/sidebar/Sidebar'
-import Map from './Map'
+import mapImage from './blank-usa-map.jpg'
+import Sidebar from './components/sidebar/Sidebar'
 
 class App extends React.Component {
 
@@ -20,11 +20,16 @@ class App extends React.Component {
   }
 
   render() {
+
+    const alienStyle = {
+      top: `${this.state.top}%`,
+      left: `${this.state.left}%`
+    }
     return (
       <div className="App">
         <Map usStates={this.state.usStates} />
         <div className="sidebar" />
-        {/* <Sidebar positionTop={this.state.top} positionLeft={this.state.left} allStates={this.state.usStates}/> */}
+        <Sidebar positionTop={this.state.top} positionLeft={this.state.left} allStates={this.state.usStates}/>
       </div>
     );
   }
