@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import mapImage from './blank-usa-map.jpg'
-import Sidebar from './components/sidebar/sidebar'
+import Sidebar from './components/sidebar/Sidebar'
 
 class App extends React.Component {
 
