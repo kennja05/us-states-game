@@ -6,8 +6,18 @@ class App extends React.Component {
 
   state = {
     top: 67,
-    left: 67
+    left: 67,
+    usStates: []
   }
+
+  componentDidMount() {
+    fetch('http://localhost:3000/states')
+      .then(res => res.json())
+      .then(statesArray => this.setState({
+        usStates: statesArray
+      }))
+  }
+
   render() {
     const alienStyle = {
       top: `${this.state.top}%`,
