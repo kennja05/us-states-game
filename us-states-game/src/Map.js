@@ -11,47 +11,43 @@ const SMALL_STATES = [{name: "Massachusetts", realX: 93, realY: 19},
 
 export default class Map extends Component {
 
-    state = {
-        left: -50,
-        top: -50,
-        realLeft: -50,
-        realTop: -50
-    }
-
     render () {
         const alienStyle = {
-            left: `50%`,
-            top: `70%`
+            left: `${this.props.alienState.x}%`,
+            top: `${this.props.alienState.y}%`
         }
+        const realXY = this.getRealCoordinates();
         const redDotStyle = {
-            left: `${this.state.realLeft}%`,
-            top: `${this.state.realTop}%`
+            left: `${realXY.realLeft}%`,
+            top: `${realXY.realTop}%`
         }
-        
+        console.log(this.props.alienState)
        
         return (
-            <div className="map" onClick={this.onClick}> 
+            <div className="map" > 
                 <div className="alien" style={alienStyle} /> 
                 <div className="redDot" style={redDotStyle} /> 
             </div>
         )
     }
 
-    onClick = event => {
-        const random = Math.floor(Math.random() * 50) + 1;
-
-        const randomState = this.props.usStates[random]
-        // const randomState = this.props.usStates.find(state => state.name === "Delaware");
-        const smallState = SMALL_STATES.find(state => state.name === randomState.name);
+    getRealCoordinates = () => {
+        const smallState = SMALL_STATES.find(state => state.name === this.props.alienState.name);
 
         const realLeft = smallState ? smallState.realX : -50
         const realTop = smallState ? smallState.realY : -50
 
-        this.setState({top: randomState.y, 
-                       left: randomState.x,
-                       realLeft: realLeft,
-                       realTop: realTop})
-        alert(randomState.name)
+        return {realLeft: realLeft,
+                realTop: realTop}
+    }
+
+    onClick = event => {
+        // const random = Math.floor(Math.random() * 50) + 1;
+
+        // const randomState = this.props.usStates[random]
+        // const randomState = this.props.usStates.find(state => state.name === "Delaware");
+        
+        // alert(randomState.name)
 
         event.persist()
         console.log(event);

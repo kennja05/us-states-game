@@ -22,6 +22,7 @@ export default class DisplayQuestion extends React.Component {
             this.setState(oldState => {return {
                 randoStates: [...oldState.randoStates, randState]
             }})
+            this.props.moveAlien(randState)
         }
     }
 

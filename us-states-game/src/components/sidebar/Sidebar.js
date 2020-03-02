@@ -42,7 +42,9 @@ export default class Sidebar extends React.Component {
         return(
             <div className='sidebar'>
 
-                {(this.state.displayQuestion) && <DisplayQuestion handleCorrectAnswer={this.handleCorrectAnswer} stateList={this.props.allStates}/>}
+                {(this.state.displayQuestion) && <DisplayQuestion handleCorrectAnswer={this.handleCorrectAnswer} 
+                                                                stateList={this.props.allStates}
+                                                                moveAlien={this.props.moveAlien}/>}
                 {(this.state.displayStateInfo) && <CorrectAnswer handleNextButtonClick={this.handleNextButtonClick}/>}
                 {(this.state.displayEngame) && <Endgame />}
                 {(this.state.displayPregame) && <Pregame />}

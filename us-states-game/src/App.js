@@ -6,30 +6,36 @@ import Sidebar from './components/sidebar/Sidebar'
 class App extends React.Component {
 
   state = {
-    top: 92,
-    left: 7,
-    usStates: []
+    usStates: [],
+    alienState: {x: 85, y: 5}
+  }
+
+  // getRandomState = (usStates) => {
+  //   const random = Math.floor(Math.random() * 50) + 1;
+  //   return usStates[random]
+  // }
+
+  moveAlien = (state) => {
+    this.setState({alienState: state})
   }
 
   componentDidMount() {
     fetch('http://localhost:3000/states')
       .then(res => res.json())
-      .then(statesArray => this.setState({
-        usStates: statesArray
-      }))
+      .then(statesArray => {
+        // const initAlienState = this.getRandomState(statesArray);
+        this.setState({
+          usStates: statesArray
+          // alienState: initAlienState
+      })})
   }
 
   render() {
-
-    const alienStyle = {
-      top: `${this.state.top}%`,
-      left: `${this.state.left}%`
-    }
-    return (
+    
+    return !this.state.alienState ? null : ( 
       <div className="App">
-        <Map usStates={this.state.usStates} />
-        <div className="sidebar" />
-        <Sidebar positionTop={this.state.top} positionLeft={this.state.left} allStates={this.state.usStates}/>
+        <Map usStates={this.state.usStates} alienState={this.state.alienState}/>
+        <Sidebar allStates={this.state.usStates} moveAlien={this.moveAlien}/>
       </div>
     );
   }
