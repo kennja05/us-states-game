@@ -19,46 +19,32 @@ export default class Sidebar extends React.Component {
     }
 
     componentDidMount() {
-        console.log("HERE", this.props.allStates)
         this.generateRandoStates(this.props.allStates)
-    }
-
-    handleGuessState = (guessedState) => {
-        const correctState = this.state.randoStates[this.state.correctStateIndex]
-
-        if (guessedState === correctState.name) {
-            this.setState({
-                displayQuestion: false,
-                displayStateInfo: true,
-                correctAnswer: correctState
-            })
-        } else {
-            alert("Wrong answer. Shame on you. Please guess again!")
-        }
     }
 
     getRandomInt = (max) => {
         return Math.floor(Math.random() * max);
     }
 
-    //this will be passed down to the correctAnswer component to move to the next question or complete game if applicable
-    handleNextButtonClick = () => {
-        if (this.state.guessedStates.length < 50) {
-            //TBD only un-guessed states as param
-            this.generateRandoStates(this.props.allStates)
-        } else {
-            this.setState({
-                displayStateInfo: false,
-                displayEndgame: true
-            })
+    getRandomState = (randoStates) => {
+        const randNumber = this.getRandomInt(50);
+        let randState = this.props.allStates[randNumber];
+        console.log(this.state.guessedStates)
+        const alreadyGuessed = this.state.guessedStates.findIndex(guessedState => guessedState.name === randState.name) >= 0;
+        const alreadyInThisRandomBatch = randoStates.findIndex(randomState => randomState.name === randState.name) >= 0;
+
+        if (alreadyGuessed || alreadyInThisRandomBatch) {
+            randState = this.getRandomState(randoStates);
         }
+
+        return randState;
     }
 
-    generateRandoStates = (stateArray) => {
+    generateRandoStates = () => {
+
         const randoStates = [];
         for (let i=0; i < 4; i++) {
-            const randNumber = this.getRandomInt(stateArray.length);
-            const randState = stateArray[randNumber];
+            const randState = this.getRandomState(randoStates)
             randoStates.push(randState)
         }
 
@@ -74,23 +60,54 @@ export default class Sidebar extends React.Component {
 
     }
 
+    handleGuessState = (guessedState) => {
+        const correctState = this.state.randoStates[this.state.correctStateIndex]
+
+        if (guessedState === correctState.name) {
+            const newGuessedStates = [...this.state.guessedStates, correctState]
+            this.setState({
+                displayQuestion: false,
+                displayStateInfo: true,
+                correctAnswer: correctState,
+                guessedStates: newGuessedStates
+            })
+        } else {
+            alert("Wrong answer. Shame on you. Please guess again!")
+        }
+    }
+
+    //this will be passed down to the correctAnswer component to move to the next question or complete game if applicable
+    handleNextButtonClick = () => {
+        if (this.state.guessedStates.length < 50) {
+            //TBD only un-guessed states as param
+            this.generateRandoStates(this.props.allStates)
+        } else {
+            this.setState({
+                displayStateInfo: false,
+                displayEndgame: true
+            })
+        }
+    }
+
     render() {
-        console.log(this.state.randoStates)
         return(
             this.state.randoStates.length === 0 ? null :
             <div className='sidebar'>
-                {/* some of these could be different routes in order to meet the requirement to use react router */}
+                
                 {(this.state.displayQuestion) &&
                  <DisplayQuestion handleGuessState={this.handleGuessState} 
                                   randoStates={this.state.randoStates}
                                                                 />}
+
                 {(this.state.displayStateInfo) && 
                  <CorrectAnswer handleNextButtonClick={this.handleNextButtonClick} 
                                 correctState={this.state.correctAnswer} />}
-                {(this.state.displayEngame) && <Endgame />}
-                {(this.state.displayPregame) && <Pregame />}
 
+                {(this.state.displayEngame) && 
+                <Endgame />}
 
+                {(this.state.displayPregame) && 
+                <Pregame />}
             </div>
         )
     }
