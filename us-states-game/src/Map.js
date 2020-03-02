@@ -20,8 +20,8 @@ export default class Map extends Component {
 
     render () {
         const alienStyle = {
-            left: `${this.state.left}%`,
-            top: `${this.state.top}%`
+            left: `50%`,
+            top: `70%`
         }
         const redDotStyle = {
             left: `${this.state.realLeft}%`,

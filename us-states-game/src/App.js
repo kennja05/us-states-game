@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import mapImage from './blank-usa-map.jpg'
+import Map from './Map'
 import Sidebar from './components/sidebar/Sidebar'
 
 class App extends React.Component {
