@@ -41,7 +41,7 @@ export default class Sidebar extends React.Component {
     render() {
         return(
             <div className='sidebar'>
-
+                {/* some of these could be different routes in order to meet the requirement to use react router */}
                 {(this.state.displayQuestion) && <DisplayQuestion handleCorrectAnswer={this.handleCorrectAnswer} stateList={this.props.allStates}/>}
                 {(this.state.displayStateInfo) && <CorrectAnswer handleNextButtonClick={this.handleNextButtonClick}/>}
                 {(this.state.displayEngame) && <Endgame />}
@@ -52,6 +52,4 @@ export default class Sidebar extends React.Component {
         )
     }
     
-
-
 }

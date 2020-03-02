@@ -17,7 +17,7 @@ export default class DisplayQuestion extends React.Component {
     // currently allows for the same element to be chosen randomly multiple times
     // should be fixed l8er
     generateRandoStates = (stateArray) => {
-        for (let i=0; i < 4; i++) {
+        for (let i=0; i < 3; i++) {
             let randState = (stateArray[Math.floor(Math.random()*Math.floor(this.props.stateList.length))])
             this.setState(oldState => {return {
                 randoStates: [...oldState.randoStates, randState]
@@ -32,7 +32,6 @@ export default class DisplayQuestion extends React.Component {
         }
     }
 
-    
 
     handleFormChange = (event) => {
         this.setState({
@@ -45,29 +44,31 @@ export default class DisplayQuestion extends React.Component {
         if (this.state.guessedState === this.state.correctState.name) {
             this.props.handleCorrectAnswer()
         } else {
-            alert("Wrong answer. Shame on you and your ancestors. Please guess again!")
+            alert("Wrong answer. Shame on you. Please guess again!")
         }
     }
     
     render () {
+        console.log(this.state.randoStates)
         return(
             <div style={{color: "white"}} className="sub-sidebar">
             <h2>Where Am I Right Now???</h2>
-    
+            {this.state.randoStates.length === 0 ? null : 
             <form onSubmit={this.handleGuessState}>
-                <p><label>Cali</label> 
-                <input onChange={this.handleFormChange} name='cali' type='radio' checked={this.state.guessedState === 'cali'}/></p>
-                <p><label>Nevada</label>
-                <input onChange={this.handleFormChange} name='Nevada' type='radio' checked={this.state.guessedState === 'Nevada'}/></p>
-                <p><label>Massachussetts</label>
-                <input onChange={this.handleFormChange} name='Massachussetts' type='radio' checked={this.state.guessedState === 'Massachussetts'}/></p>
-                <p><label></label>
-                <input onChange={this.handleFormChange} name={this.state.correctState.name} type='radio' checked={this.state.guessedState === this.state.correctState}/></p>
+                <p><label>{this.state.randoStates[0].name}</label> 
+                <input onChange={this.handleFormChange} name={this.state.randoStates[0].name} type='radio' checked={this.state.guessedState === this.state.randoStates[0].name}/></p>
+                <p><label>{this.state.randoStates[1].name}</label>
+                <input onChange={this.handleFormChange} name={this.state.randoStates[1].name} type='radio' checked={this.state.guessedState === this.state.randoStates[1].name}/></p>
+                <p><label>{this.state.randoStates[2].name}</label>
+                <input onChange={this.handleFormChange} name={this.state.randoStates[2].name} type='radio' checked={this.state.guessedState === this.state.randoStates[2].name}/></p>
+                <p><label>{this.state.correctState.name}</label>
+                <input onChange={this.handleFormChange} name={this.state.correctState.name} type='radio' checked={this.state.guessedState === this.state.correctState.name}/></p>
                 <p>
                     <input type='submit' value='Submit Answer!' />
                 </p>
 
             </form>
+            }
             </div>
         )
     }
