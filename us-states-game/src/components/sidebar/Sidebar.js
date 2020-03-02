@@ -9,6 +9,7 @@ export default class Sidebar extends React.Component {
     //the goal of this state is to conditionally render the subcomponents of sidebar
     state={
         correctStateIndex: 2,
+        user: null,
         correctAnswer: null,
         randoStates: [],
         guessedStates: [],
@@ -29,7 +30,7 @@ export default class Sidebar extends React.Component {
     getRandomState = (randoStates) => {
         const randNumber = this.getRandomInt(50);
         let randState = this.props.allStates[randNumber];
-        console.log(this.state.guessedStates)
+
         const alreadyGuessed = this.state.guessedStates.findIndex(guessedState => guessedState.name === randState.name) >= 0;
         const alreadyInThisRandomBatch = randoStates.findIndex(randomState => randomState.name === randState.name) >= 0;
 
@@ -43,6 +44,7 @@ export default class Sidebar extends React.Component {
     generateRandoStates = () => {
 
         const randoStates = [];
+        
         for (let i=0; i < 4; i++) {
             const randState = this.getRandomState(randoStates)
             randoStates.push(randState)
@@ -80,7 +82,7 @@ export default class Sidebar extends React.Component {
     handleNextButtonClick = () => {
         if (this.state.guessedStates.length < 50) {
             //TBD only un-guessed states as param
-            this.generateRandoStates(this.props.allStates)
+            this.generateRandoStates()
         } else {
             this.setState({
                 displayStateInfo: false,
@@ -93,21 +95,22 @@ export default class Sidebar extends React.Component {
         return(
             this.state.randoStates.length === 0 ? null :
             <div className='sidebar'>
+                {(!this.state.user) && 
+                <Pregame />}
                 
-                {(this.state.displayQuestion) &&
+                {this.state.user && this.state.displayQuestion &&
                  <DisplayQuestion handleGuessState={this.handleGuessState} 
                                   randoStates={this.state.randoStates}
                                                                 />}
 
-                {(this.state.displayStateInfo) && 
+                {this.state.user && this.state.displayStateInfo && 
                  <CorrectAnswer handleNextButtonClick={this.handleNextButtonClick} 
                                 correctState={this.state.correctAnswer} />}
 
-                {(this.state.displayEngame) && 
+                {this.state.user && this.state.displayEndgame && 
                 <Endgame />}
 
-                {(this.state.displayPregame) && 
-                <Pregame />}
+                
             </div>
         )
     }
