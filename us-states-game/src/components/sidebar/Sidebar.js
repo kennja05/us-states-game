@@ -1,5 +1,5 @@
 import React from 'react' 
-import CorrectAnswer from './CorrectAnswer'
+import CorrectAnswer from './correctAnswer'
 import Pregame from './Pregame'
 import Endgame from './Endgame'
 import DisplayQuestion from './DisplayQuestion'
