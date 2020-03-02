@@ -16,6 +16,7 @@ class App extends React.Component {
   // }
 
   moveAlien = (state) => {
+    console.log("ALIEN STATE", state)
     this.setState({alienState: state})
   }
 
@@ -26,13 +27,12 @@ class App extends React.Component {
         // const initAlienState = this.getRandomState(statesArray);
         this.setState({
           usStates: statesArray
-          // alienState: initAlienState
       })})
   }
 
   render() {
     
-    return !this.state.alienState ? null : ( 
+    return this.state.usStates.length === 0 ? null : ( 
       <div className="App">
         <Map usStates={this.state.usStates} alienState={this.state.alienState}/>
         <Sidebar allStates={this.state.usStates} moveAlien={this.moveAlien}/>
