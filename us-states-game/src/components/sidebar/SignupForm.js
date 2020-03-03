@@ -5,13 +5,13 @@ const SignUpForm = (props) => {
     return(
         <div style={{color: "white"}}>
             <h3>New User? Create your Profile</h3>
-            <form onSubmit={props.signUp} id='signup-form'>
+            <form onSubmit={props.handleSignup} id='signup-form'>
 
             <p><label>Username: </label>
             <input onChange={props.handleFormChange} type='text' value={props.username} name='username' placeholder='username'/></p>
             
             <p><label>Profile Picture</label>
-            <input type='text' value={props.image} name='image' placeholder='image url' />
+            <input onChange={props.handleFormChange} type='text' value={props.image} name='image' placeholder='image url' />
             </p>
 
             <p><label>Password: </label>
