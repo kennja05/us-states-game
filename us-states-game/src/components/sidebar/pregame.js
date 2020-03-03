@@ -26,9 +26,9 @@ export default class Pregame extends React.Component {
     render() {
         return(
             <div style={{color: "white"}} className='sub-sidebar'>
-                {!this.state.displayLogin && <a onClick={this.showLoginForm}>Log In </a>}
+                {!this.state.displayLogin && <button className='button' onClick={this.showLoginForm}>Log In </button>}
                 
-                {!this.state.displaySignup && <a onClick={this.showSignupForm}>Sign Up </a>}
+                {!this.state.displaySignup && <button className='button' onClick={this.showSignupForm}>Sign Up </button>}
                 {this.state.displayLogin && <LoginForm username={this.props.username} password={this.props.password} 
                                             handleLogin={this.props.handleLogin} handleFormChange={this.props.handleFormChange} />}
                 

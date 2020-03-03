@@ -102,7 +102,6 @@ export default class Sidebar extends React.Component {
     }
     //will be passed down to pregame then log in form. when user is set to true it should then display the first question
     handleLogin = (e) => {
-        console.log('LOGGED IN', e)
         e.preventDefault()
         this.setState({
             user: true,
