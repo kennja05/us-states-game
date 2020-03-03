@@ -39,7 +39,10 @@ export default class Pregame extends React.Component {
                 {this.state.displayLogin && <LoginForm username={this.props.username} password={this.props.password} 
                                             handleLogin={this.props.handleLogin} handleFormChange={this.props.handleFormChange} />}
                 
-                {this.state.displaySignup && <SignupForm /> }
+                {this.state.displaySignup && <SignupForm username={this.props.username} password={this.props.password} 
+                passwordConfirmation={this.props.passwordConfirmation} image={this.props.image}
+                handleFormChange={this.props.handleSignupFormChange} handleSignup={this.props.handleSignup}
+                /> }
             </div>
         )
     }

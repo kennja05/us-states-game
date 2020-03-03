@@ -6,12 +6,12 @@ import DisplayQuestion from './DisplayQuestion'
 
 export default class Sidebar extends React.Component {
 
-    //the goal of this state is to conditionally render the subcomponents of sidebar
     state={
         correctStateIndex: 2,
-        allUsers: [],
         username: "",
         password: "",
+        passwordConfirmation: "",
+        image: "",
         user: false,
         correctAnswer: null,
         randoStates: [],
@@ -126,6 +126,38 @@ export default class Sidebar extends React.Component {
         }
     }
 
+    handleSignUpFormChange =(e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    handleSignup = (e) => {
+        e.preventDefault()
+        const {username, password, image, passwordConfirmation} = this.state
+        const foundUser = this.props.users.find(user => user.name === username)
+
+        if(foundUser) {
+            alert('That Username is already Taken. Please try a different username. If you already have a profile please log in.')
+        } else {
+        if (password === passwordConfirmation) {
+        const name = username
+        const userObj = {name, password, image}
+        fetch('http://localhost:3000/users', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(userObj)
+        })
+        .then(res => res.json())
+        .then(newUser => this.setState({
+            user: newUser.id
+        }))} else {
+            alert("Input Password and Retyped Password Must Match")
+        }}
+    }
+
     saveGame = () => {
         const game = {user_id: 1, moves: 55, time: 560}
         this.props.saveGame(game)
@@ -138,7 +170,9 @@ export default class Sidebar extends React.Component {
             <div className='sidebar'>
                 {(!this.state.user) && 
                 <Pregame handleFormChange={this.handleLoginFormChange} handleLogin={this.handleLogin} 
-                                    password={this.state.password} username={this.state.username} 
+                                    password={this.state.password} username={this.state.username} image={this.state.image} 
+                                    passwordConfirmation={this.state.passwordConfirmation}
+                                    handleSignupFormChange={this.handleSignUpFormChange} handleSignup={this.handleSignup}
                                                                 />}
                 
                 {this.state.user && this.state.displayQuestion &&
