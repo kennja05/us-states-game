@@ -12,7 +12,7 @@ export default class CorrectAnswer extends React.Component {
                 <h3>Here's some more info about {this.props.correctState.name}:</h3>
                 <h4>Capital: {this.props.correctState.capital}</h4>
                 <h4>Nickname: {this.props.correctState.nickname}</h4>
-                <img id='state-image' className="state-img" src={this.props.correctState.image}/>
+                <img id='state-image' className="state-img" alt={this.props.correctState.name} src={this.props.correctState.image}/>
                 <br></br>
                 
                 <button onClick={this.props.handleNextButtonClick} className='sidebar-button'>Next Question</button>
