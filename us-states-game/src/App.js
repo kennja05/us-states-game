@@ -16,7 +16,6 @@ class App extends React.Component {
   // }
 
   moveAlien = (state) => {
-    console.log("ALIEN STATE", state)
     this.setState({alienState: state})
   }
 

@@ -27,30 +27,40 @@ export default class Sidebar extends React.Component {
         return Math.floor(Math.random() * max);
     }
 
-    getRandomState = (randoStates) => {
+    getRandomState = (randoStates, alreadyGuessedEnforced) => {
+        
         const randNumber = this.getRandomInt(50);
         let randState = this.props.allStates[randNumber];
 
         const alreadyGuessed = this.state.guessedStates.findIndex(guessedState => guessedState.name === randState.name) >= 0;
+        console.log("ALREADY GUESSED", alreadyGuessed)
         const alreadyInThisRandomBatch = randoStates.findIndex(randomState => randomState.name === randState.name) >= 0;
 
-        if (alreadyGuessed || alreadyInThisRandomBatch) {
-            randState = this.getRandomState(randoStates);
+        if (alreadyInThisRandomBatch || (alreadyGuessed && alreadyGuessedEnforced)) {
+            randState = this.getRandomState(randoStates, alreadyGuessedEnforced);
         }
 
         return randState;
     }
 
     generateRandoStates = () => {
-
         const randoStates = [];
-        
-        for (let i=0; i < 4; i++) {
-            const randState = this.getRandomState(randoStates)
-            randoStates.push(randState)
-        }
-
         const correctStateIndex = this.getRandomInt(4);
+
+        if (this.state.guessedStates.length > 4) {
+            for (let i=0; i < 3; i++) {
+                const randState = this.getRandomState(randoStates, false)
+                randoStates.push(randState)
+            }
+            const correctState = this.getRandomState(randoStates, true)
+            randoStates.splice(correctStateIndex, 0, correctState);
+        }
+        else {
+            for (let i=0; i < 4; i++) {
+                const randState = this.getRandomState(randoStates, true)
+                randoStates.push(randState)
+            }
+        }
 
         this.setState({randoStates: randoStates, 
                        correctStateIndex: correctStateIndex,
