@@ -1,7 +1,7 @@
 import React from 'react' 
 import CorrectAnswer from './correctAnswer'
-import Pregame from './Pregame'
-import Endgame from './Endgame'
+import Pregame from './pregame'
+import Endgame from './endgame'
 import DisplayQuestion from './DisplayQuestion'
 
 export default class Sidebar extends React.Component {
@@ -9,7 +9,10 @@ export default class Sidebar extends React.Component {
     //the goal of this state is to conditionally render the subcomponents of sidebar
     state={
         correctStateIndex: 2,
-        user: null,
+        allUsers: [],
+        username: "",
+        password: "",
+        user: false,
         correctAnswer: null,
         randoStates: [],
         guessedStates: [],
@@ -20,7 +23,7 @@ export default class Sidebar extends React.Component {
     }
 
     componentDidMount() {
-        this.generateRandoStates(this.props.allStates)
+        this.generateRandoStates(this.props.allStates);
     }
 
     getRandomInt = (max) => {
@@ -91,12 +94,33 @@ export default class Sidebar extends React.Component {
         }
     }
 
+    //will be passed down to pregame then log in form. when user is set to true it should then display the first question
+    handleLoginFormChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    //will be passed down to pregame then log in form. when user is set to true it should then display the first question
+    handleLogin = (e) => {
+        console.log('LOGGED IN', e)
+        e.preventDefault()
+        this.setState({
+            user: true,
+            displayQuestion: true,
+            password: "",
+            username: " "
+        }, () => console.log('logging in', this.state.user))
+    }
+
     render() {
+        console.log(this.state.user)
         return(
             this.state.randoStates.length === 0 ? null :
             <div className='sidebar'>
                 {(!this.state.user) && 
-                <Pregame />}
+                <Pregame handleFormChange={this.handleLoginFormChange} handleLogin={this.handleLogin} 
+                                    password={this.state.password} username={this.state.username} 
+                                                                />}
                 
                 {this.state.user && this.state.displayQuestion &&
                  <DisplayQuestion handleGuessState={this.handleGuessState} 
