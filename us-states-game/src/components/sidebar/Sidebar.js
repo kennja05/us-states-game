@@ -3,6 +3,8 @@ import CorrectAnswer from './correctAnswer'
 import Pregame from './pregame'
 import Endgame from './Endgame'
 import DisplayQuestion from './DisplayQuestion'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import Leaderboard from './Leaderboard'
 
 export default class Sidebar extends React.Component {
 
@@ -103,7 +105,7 @@ export default class Sidebar extends React.Component {
 
     //this will be passed down to the correctAnswer component to move to the next question or complete game if applicable
     handleNextButtonClick = () => {
-        if (this.state.guessedStates.length < 50) {
+        if (this.state.guessedStates.length < 2) {
             this.generateRandoStates(true)
         } else {
             this.stopTimer()
@@ -200,30 +202,32 @@ export default class Sidebar extends React.Component {
 
     render() {
         
-        return(
-            this.state.randoStates.length === 0 ? null :
+        const gameComponent = (this.state.randoStates.length === 0 ? null :
             <div className='sidebar'>
-                {(!this.state.user) && 
-                <Pregame handleFormChange={this.handleLoginFormChange} handleLogin={this.handleLogin} 
-                                    password={this.state.password} username={this.state.username} image={this.state.image} 
-                                    passwordConfirmation={this.state.passwordConfirmation}
-                                    handleSignupFormChange={this.handleSignUpFormChange} handleSignup={this.handleSignup}
-                                                                />}
-                
-                {this.state.user && this.state.displayQuestion &&
-                 <DisplayQuestion handleGuessState={this.handleGuessState} 
-                                  randoStates={this.state.randoStates}
-                                  timer={this.state.timer}                              />}
+            {(!this.state.user) && 
+            <Pregame handleFormChange={this.handleLoginFormChange} handleLogin={this.handleLogin} 
+            password={this.state.password} username={this.state.username} image={this.state.image} 
+            passwordConfirmation={this.state.passwordConfirmation}
+            handleSignupFormChange={this.handleSignUpFormChange} handleSignup={this.handleSignup}
+            />}
+            
+            {this.state.user && this.state.displayQuestion &&
+             <DisplayQuestion handleGuessState={this.handleGuessState} 
+             randoStates={this.state.randoStates}
+             timer={this.state.timer}                              />}
 
-                {this.state.user && this.state.displayStateInfo && 
-                 <CorrectAnswer handleNextButtonClick={this.handleNextButtonClick} 
-                                correctState={this.state.correctAnswer} />}
+            {this.state.user && this.state.displayStateInfo && 
+             <CorrectAnswer handleNextButtonClick={this.handleNextButtonClick} 
+             correctState={this.state.correctAnswer} />}
 
-                {this.state.user && this.state.displayEndgame && 
-                <Endgame />}
+            {this.state.user && this.state.displayEndgame && 
+            <Endgame />}</div>)
 
-                
-            </div>
+        return(
+            <Router>
+                <Route path='/leaders' component={Leaderboard} />
+                <Route path='/play' render={() => gameComponent} />
+            </Router>
         )
     }
     
