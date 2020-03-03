@@ -1,7 +1,7 @@
 import React from 'react' 
 import CorrectAnswer from './correctAnswer'
 import Pregame from './pregame'
-import Endgame from './Endgame'
+import Endgame from './endgame'
 import DisplayQuestion from './DisplayQuestion'
 
 export default class Sidebar extends React.Component {
@@ -113,12 +113,17 @@ export default class Sidebar extends React.Component {
     //will be passed down to pregame then log in form. when user is set to true it should then display the first question
     handleLogin = (e) => {
         e.preventDefault()
+        const foundUser = this.props.users.find(user => user.name === this.state.username)
+        if (foundUser && foundUser.password === this.state.password) {
         this.setState({
-            user: true,
+            user: foundUser.id,
             displayQuestion: true,
             password: "",
             username: " "
-        }, () => console.log('logging in', this.state.user))
+        })}
+        else{
+            alert("Incorrect Credentials. Please try again or create a new profile.")
+        }
     }
 
     saveGame = () => {
@@ -127,7 +132,7 @@ export default class Sidebar extends React.Component {
     }
 
     render() {
-        console.log(this.state.user)
+        
         return(
             this.state.randoStates.length === 0 ? null :
             <div className='sidebar'>
