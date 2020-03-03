@@ -6,6 +6,7 @@ import Sidebar from './components/sidebar/Sidebar'
 class App extends React.Component {
 
   state = {
+    users: [],
     usStates: [],
     alienState: {x: 85, y: 5}
   }
@@ -27,6 +28,11 @@ class App extends React.Component {
         this.setState({
           usStates: statesArray
       })})
+      fetch('http://localhost:3000/users')
+      .then(resp => resp.json())
+      .then(userArray => this.setState({
+        users: userArray
+      }))
   }
 
   saveGame = (game) => {
@@ -43,12 +49,13 @@ class App extends React.Component {
         })
   }
 
+
   render() {
     
     return this.state.usStates.length === 0 ? null : ( 
       <div className="App">
         <Map usStates={this.state.usStates} alienState={this.state.alienState}/>
-        <Sidebar allStates={this.state.usStates} moveAlien={this.moveAlien} saveGame={this.saveGame}/>
+        <Sidebar allStates={this.state.usStates} moveAlien={this.moveAlien} users={this.state.users} saveGame={this.saveGame}/>
       </div>
     );
   }

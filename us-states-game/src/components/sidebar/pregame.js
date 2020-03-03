@@ -6,8 +6,15 @@ export default class Pregame extends React.Component {
 
     state={
         displaySignup: false,
-        displayLogin: false
+        displayLogin: false,
+        userList: []
     }
+
+    // componentDidMount = () => {
+    //     fetch('http://localhost:3000/users')
+    //         .then(res => res.json())
+    //         .then(users => console.log(users))
+    // }
     
     showLoginForm = () => {
         this.setState({
