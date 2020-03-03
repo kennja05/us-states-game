@@ -29,12 +29,26 @@ class App extends React.Component {
       })})
   }
 
+  saveGame = (game) => {
+    fetch('http://localhost:3000/games', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(game)
+    })
+      .then(res => res.json())
+      .then(game => {
+        console.log("GAME: ", game)
+        })
+  }
+
   render() {
     
     return this.state.usStates.length === 0 ? null : ( 
       <div className="App">
         <Map usStates={this.state.usStates} alienState={this.state.alienState}/>
-        <Sidebar allStates={this.state.usStates} moveAlien={this.moveAlien}/>
+        <Sidebar allStates={this.state.usStates} moveAlien={this.moveAlien} saveGame={this.saveGame}/>
       </div>
     );
   }
