@@ -16,6 +16,7 @@ export default class Sidebar extends React.Component {
         correctAnswer: null,
         randoStates: [],
         guessedStates: [],
+        moves: 0,
         displayQuestion: false, 
         displayStateInfo: false,
         displayEndgame: false,
@@ -23,7 +24,7 @@ export default class Sidebar extends React.Component {
     }
 
     componentDidMount() {
-        this.generateRandoStates(this.props.allStates);
+        this.generateRandoStates();
     }
 
     getRandomInt = (max) => {
@@ -46,6 +47,7 @@ export default class Sidebar extends React.Component {
     }
 
     generateRandoStates = () => {
+        
         const randoStates = [];
         const correctStateIndex = this.getRandomInt(4);
 
@@ -67,7 +69,7 @@ export default class Sidebar extends React.Component {
         this.setState({randoStates: randoStates, 
                        correctStateIndex: correctStateIndex,
                        displayQuestion: true,
-                       displayStateInfo: false
+                       displayStateInfo: false,
                      })
         
         this.props.moveAlien(randoStates[correctStateIndex])
@@ -76,31 +78,34 @@ export default class Sidebar extends React.Component {
 
     handleGuessState = (guessedState) => {
         const correctState = this.state.randoStates[this.state.correctStateIndex]
-
+        const newMoves = this.state.moves + 1
         if (guessedState === correctState.name) {
             const newGuessedStates = [...this.state.guessedStates, correctState]
             this.setState({
                 displayQuestion: false,
                 displayStateInfo: true,
                 correctAnswer: correctState,
-                guessedStates: newGuessedStates
+                guessedStates: newGuessedStates,
+                moves: newMoves
             })
         } else {
             alert("Wrong answer. Shame on you. Please guess again!")
+            this.setState({
+                moves: newMoves
+            })
         }
     }
 
     //this will be passed down to the correctAnswer component to move to the next question or complete game if applicable
     handleNextButtonClick = () => {
-        if (this.state.guessedStates.length < 50) {
-            //TBD only un-guessed states as param
+        if (this.state.guessedStates.length < 4) {
             this.generateRandoStates()
         } else {
-            this.saveGame();
             this.setState({
                 displayStateInfo: false,
                 displayEndgame: true
             })
+            this.saveGame();
         }
     }
 
@@ -122,7 +127,7 @@ export default class Sidebar extends React.Component {
     }
 
     saveGame = () => {
-        const game = {user_id: 1, moves: 55, time: 560}
+        const game = {user_id: 1, moves: this.state.moves, time: 560}
         this.props.saveGame(game)
     }
 
