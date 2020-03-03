@@ -1,7 +1,7 @@
 import React from 'react' 
 import CorrectAnswer from './correctAnswer'
 import Pregame from './pregame'
-import Endgame from './endgame'
+import Endgame from './Endgame'
 import DisplayQuestion from './DisplayQuestion'
 
 export default class Sidebar extends React.Component {
@@ -21,10 +21,15 @@ export default class Sidebar extends React.Component {
         displayStateInfo: false,
         displayEndgame: false,
         displayPregame: false,
+        timer: {
+            time: 0,
+            start: 0,
+            isOn: false
+        }
     }
 
     componentDidMount() {
-        this.generateRandoStates();
+        this.generateRandoStates(false);
     }
 
     getRandomInt = (max) => {
@@ -46,7 +51,7 @@ export default class Sidebar extends React.Component {
         return randState;
     }
 
-    generateRandoStates = () => {
+    generateRandoStates = (moveAlien) => {
         
         const randoStates = [];
         const correctStateIndex = this.getRandomInt(4);
@@ -71,9 +76,9 @@ export default class Sidebar extends React.Component {
                        displayQuestion: true,
                        displayStateInfo: false,
                      })
-        
-        this.props.moveAlien(randoStates[correctStateIndex])
-
+        if (moveAlien) {
+            this.props.moveAlien(randoStates[correctStateIndex])
+        }
     }
 
     handleGuessState = (guessedState) => {
@@ -98,9 +103,10 @@ export default class Sidebar extends React.Component {
 
     //this will be passed down to the correctAnswer component to move to the next question or complete game if applicable
     handleNextButtonClick = () => {
-        if (this.state.guessedStates.length < 4) {
-            this.generateRandoStates()
+        if (this.state.guessedStates.length < 50) {
+            this.generateRandoStates(true)
         } else {
+            this.stopTimer()
             this.setState({
                 displayStateInfo: false,
                 displayEndgame: true
@@ -120,20 +126,44 @@ export default class Sidebar extends React.Component {
         e.preventDefault()
         const foundUser = this.props.users.find(user => user.name === this.state.username)
         if (foundUser && foundUser.password === this.state.password) {
-        this.setState({
-            user: foundUser.id,
-            displayQuestion: true,
-            password: "",
-            username: " "
-        })}
+            this.setState({
+                user: foundUser.id,
+                displayQuestion: true,
+                password: "",
+                username: " "
+            })
+            this.props.moveAlien(this.state.randoStates[this.state.correctStateIndex])
+            this.startTimer()
+        }
         else{
             alert("Incorrect Credentials. Please try again or create a new profile.")
         }
     }
 
     saveGame = () => {
-        const game = {user_id: 1, moves: this.state.moves, time: 560}
+        const game = {user_id: 1, moves: this.state.moves, time: this.state.timer.time}
         this.props.saveGame(game)
+    }
+
+    startTimer = () => {
+        this.setState({ timer: {time: this.state.timer.time,
+                                start: Date.now() - this.state.timer.time,
+                                isOn: true}
+        })
+        this.timer = setInterval(() => {
+                        const timer = this.state.timer
+                        timer.time = Date.now() - this.state.timer.start
+                        this.setState({timer: timer})
+                    }, 1000)
+    }
+
+    stopTimer = () => {
+        this.setState({timer: {isOn: false}})
+        clearInterval(this.timer)
+    }
+
+    resetTimer = () => {
+        this.setState({timer: {time: 0}})
     }
 
     render() {
@@ -149,7 +179,7 @@ export default class Sidebar extends React.Component {
                 {this.state.user && this.state.displayQuestion &&
                  <DisplayQuestion handleGuessState={this.handleGuessState} 
                                   randoStates={this.state.randoStates}
-                                                                />}
+                                  timer={this.state.timer}                              />}
 
                 {this.state.user && this.state.displayStateInfo && 
                  <CorrectAnswer handleNextButtonClick={this.handleNextButtonClick} 

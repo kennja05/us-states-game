@@ -1,4 +1,5 @@
 import React from 'react'
+import Timer from '../Timer'
 
 export default class DisplayQuestion extends React.Component {
 
@@ -25,24 +26,26 @@ export default class DisplayQuestion extends React.Component {
     
     render () {
         return(
+            
             <div style={{color: "white"}} className="sub-sidebar">
-            <h2>Where Am I Right Now???</h2>
-            {this.props.randoStates.length === 0 ? null : 
-            <form onSubmit={this.handleGuessState}>
-                <p><label>{this.props.randoStates[0].name}</label> 
-                <input onChange={this.handleFormChange} name={this.props.randoStates[0].name} type='radio' checked={this.state.guessedState === this.props.randoStates[0].name}/></p>
-                <p><label>{this.props.randoStates[1].name}</label>
-                <input onChange={this.handleFormChange} name={this.props.randoStates[1].name} type='radio' checked={this.state.guessedState === this.props.randoStates[1].name}/></p>
-                <p><label>{this.props.randoStates[2].name}</label>
-                <input onChange={this.handleFormChange} name={this.props.randoStates[2].name} type='radio' checked={this.state.guessedState === this.props.randoStates[2].name}/></p>
-                <p><label>{this.props.randoStates[3].name}</label>
-                <input onChange={this.handleFormChange} name={this.props.randoStates[3].name} type='radio' checked={this.state.guessedState === this.props.randoStates[3].name}/></p>
-                <p>
-                    <input type='submit' value='Submit Answer!' />
-                </p>
+                <Timer timer={this.props.timer}/>
+                <h2>Where Am I Right Now?</h2>
+                {this.props.randoStates.length === 0 ? null : 
+                <form onSubmit={this.handleGuessState}>
+                    <p><label>{this.props.randoStates[0].name}</label> 
+                    <input onChange={this.handleFormChange} name={this.props.randoStates[0].name} type='radio' checked={this.state.guessedState === this.props.randoStates[0].name}/></p>
+                    <p><label>{this.props.randoStates[1].name}</label>
+                    <input onChange={this.handleFormChange} name={this.props.randoStates[1].name} type='radio' checked={this.state.guessedState === this.props.randoStates[1].name}/></p>
+                    <p><label>{this.props.randoStates[2].name}</label>
+                    <input onChange={this.handleFormChange} name={this.props.randoStates[2].name} type='radio' checked={this.state.guessedState === this.props.randoStates[2].name}/></p>
+                    <p><label>{this.props.randoStates[3].name}</label>
+                    <input onChange={this.handleFormChange} name={this.props.randoStates[3].name} type='radio' checked={this.state.guessedState === this.props.randoStates[3].name}/></p>
+                    <p>
+                        <input type='submit' value='Submit Answer!' />
+                    </p>
 
-            </form>
-            }
+                </form>
+                }
             </div>
         )
     }

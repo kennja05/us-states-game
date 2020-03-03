@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Map from './Map'
+import Map from './components/Map'
 import Sidebar from './components/sidebar/Sidebar'
 
 class App extends React.Component {
