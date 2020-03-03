@@ -1,7 +1,7 @@
 import React from 'react' 
 import CorrectAnswer from './correctAnswer'
 import Pregame from './pregame'
-import Endgame from './endgame'
+import Endgame from './Endgame'
 import DisplayQuestion from './DisplayQuestion'
 
 export default class Sidebar extends React.Component {
@@ -30,30 +30,39 @@ export default class Sidebar extends React.Component {
         return Math.floor(Math.random() * max);
     }
 
-    getRandomState = (randoStates) => {
+    getRandomState = (randoStates, alreadyGuessedEnforced) => {
+        
         const randNumber = this.getRandomInt(50);
         let randState = this.props.allStates[randNumber];
 
         const alreadyGuessed = this.state.guessedStates.findIndex(guessedState => guessedState.name === randState.name) >= 0;
         const alreadyInThisRandomBatch = randoStates.findIndex(randomState => randomState.name === randState.name) >= 0;
 
-        if (alreadyGuessed || alreadyInThisRandomBatch) {
-            randState = this.getRandomState(randoStates);
+        if (alreadyInThisRandomBatch || (alreadyGuessed && alreadyGuessedEnforced)) {
+            randState = this.getRandomState(randoStates, alreadyGuessedEnforced);
         }
 
         return randState;
     }
 
     generateRandoStates = () => {
-
         const randoStates = [];
-        
-        for (let i=0; i < 4; i++) {
-            const randState = this.getRandomState(randoStates)
-            randoStates.push(randState)
-        }
-
         const correctStateIndex = this.getRandomInt(4);
+
+        if (this.state.guessedStates.length > 4) {
+            for (let i=0; i < 3; i++) {
+                const randState = this.getRandomState(randoStates, false)
+                randoStates.push(randState)
+            }
+            const correctState = this.getRandomState(randoStates, true)
+            randoStates.splice(correctStateIndex, 0, correctState);
+        }
+        else {
+            for (let i=0; i < 4; i++) {
+                const randState = this.getRandomState(randoStates, true)
+                randoStates.push(randState)
+            }
+        }
 
         this.setState({randoStates: randoStates, 
                        correctStateIndex: correctStateIndex,
@@ -87,6 +96,7 @@ export default class Sidebar extends React.Component {
             //TBD only un-guessed states as param
             this.generateRandoStates()
         } else {
+            this.saveGame();
             this.setState({
                 displayStateInfo: false,
                 displayEndgame: true
@@ -109,6 +119,11 @@ export default class Sidebar extends React.Component {
             password: "",
             username: " "
         }, () => console.log('logging in', this.state.user))
+    }
+
+    saveGame = () => {
+        const game = {user_id: 1, moves: 55, time: 560}
+        this.props.saveGame(game)
     }
 
     render() {

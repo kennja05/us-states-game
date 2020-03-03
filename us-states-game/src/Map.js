@@ -21,7 +21,6 @@ export default class Map extends Component {
             left: `${realXY.realLeft}%`,
             top: `${realXY.realTop}%`
         }
-        console.log(this.props.alienState)
        
         return (
             <div className="map" > 
