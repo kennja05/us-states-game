@@ -3,32 +3,28 @@ import './App.css';
 import Map from './components/Map'
 import Sidebar from './components/sidebar/Sidebar'
 
+const BASE_URL = 'http://localhost:3000'
+
 class App extends React.Component {
 
   state = {
     users: [],
     usStates: [],
-    alienState: {x: 85, y: 5}
+    alienState: {x: 85.5, y: 5.5}
   }
-
-  // getRandomState = (usStates) => {
-  //   const random = Math.floor(Math.random() * 50) + 1;
-  //   return usStates[random]
-  // }
 
   moveAlien = (state) => {
     this.setState({alienState: state})
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/states')
+    fetch(`${BASE_URL}/states`)
       .then(res => res.json())
       .then(statesArray => {
-        // const initAlienState = this.getRandomState(statesArray);
         this.setState({
           usStates: statesArray
       })})
-      fetch('http://localhost:3000/users')
+      fetch(`${BASE_URL}/users`)
       .then(resp => resp.json())
       .then(userArray => this.setState({
         users: userArray
@@ -36,7 +32,7 @@ class App extends React.Component {
   }
 
   saveGame = (game) => {
-    fetch('http://localhost:3000/games', {
+    fetch(`${BASE_URL}/games`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
@@ -46,7 +42,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(game => {
         console.log("GAME: ", game)
-        })
+      })
   }
 
 

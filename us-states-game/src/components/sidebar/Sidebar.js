@@ -105,7 +105,7 @@ export default class Sidebar extends React.Component {
 
     //this will be passed down to the correctAnswer component to move to the next question or complete game if applicable
     handleNextButtonClick = () => {
-        if (this.state.guessedStates.length < 2) {
+        if (this.state.guessedStates.length < 50) {
             this.generateRandoStates(true)
         } else {
             this.stopTimer()
@@ -157,19 +157,23 @@ export default class Sidebar extends React.Component {
             alert('That Username is already Taken. Please try a different username. If you already have a profile please log in.')
         } else {
         if (password === passwordConfirmation) {
-        const name = username
-        const userObj = {name, password, image}
-        fetch('http://localhost:3000/users', {
-            method: "POST",
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(userObj)
+            const name = username
+            const userObj = {name, password, image}
+            fetch('http://localhost:3000/users', {
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(userObj)
+            })
+            .then(res => res.json())
+            .then(newUser => {this.setState({
+                user: newUser.id
+            })
+            this.props.moveAlien(this.state.randoStates[this.state.correctStateIndex])
+            this.startTimer()
         })
-        .then(res => res.json())
-        .then(newUser => this.setState({
-            user: newUser.id
-        }))} else {
+        } else {
             alert("Input Password and Retyped Password Must Match")
         }}
     }
