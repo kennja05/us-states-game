@@ -159,7 +159,7 @@ export default class Sidebar extends React.Component {
         if (password === passwordConfirmation) {
             const name = username
             const userObj = {name, password, image}
-            fetch('http://localhost:3000/users', {
+            fetch(`https://afternoon-waters-38329.herokuapp.com/users`, {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json'

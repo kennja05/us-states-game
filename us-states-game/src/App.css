@@ -13,13 +13,13 @@
   z-index: 1;
   background-size: contain;
   background-repeat: no-repeat;
-  background-image: url('./blank-usa-map.jpg');
+  background-image: url('./blank-usa-map-1.png');
 }
 
 .sidebar {
   grid-column: 2;
   grid-row: 1;
-  background-color: blueviolet;
+  background-color: rgb(58, 147, 168);
 }
 
 .fireworks {

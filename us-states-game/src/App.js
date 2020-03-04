@@ -3,7 +3,7 @@ import './App.css';
 import Map from './components/Map'
 import Sidebar from './components/sidebar/Sidebar'
 
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'https://afternoon-waters-38329.herokuapp.com'
 
 class App extends React.Component {
 
