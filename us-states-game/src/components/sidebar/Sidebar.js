@@ -1,7 +1,7 @@
 import React from 'react' 
 import CorrectAnswer from './correctAnswer'
 import Pregame from './pregame'
-import Endgame from './Endgame'
+import Endgame from './endgame'
 import DisplayQuestion from './DisplayQuestion'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import Leaderboard from './Leaderboard'
