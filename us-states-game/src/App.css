@@ -102,3 +102,8 @@
          margin: 4px 2px;
          cursor: pointer;
 }
+
+.profile-pic {
+  height: 5vh;
+  width: 5vh;
+}
