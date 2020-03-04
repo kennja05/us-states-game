@@ -8,7 +8,7 @@ export default class Leaderboard extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3000/leaderboard')
+        fetch('https://afternoon-waters-38329.herokuapp.com/leaderboard')
             .then(res => res.json())
             .then(sortedGameList => this.setState({
                 games: sortedGameList
