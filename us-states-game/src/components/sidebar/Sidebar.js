@@ -175,7 +175,7 @@ export default class Sidebar extends React.Component {
     }
 
     saveGame = () => {
-        const game = {user_id: 1, moves: this.state.moves, time: this.state.timer.time}
+        const game = {user_id: this.state.user, moves: this.state.moves, time: this.state.timer.time}
         this.props.saveGame(game)
     }
 
