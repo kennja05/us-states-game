@@ -12,6 +12,10 @@ The United State of America is made up of 50 individual states. These states var
 
 The goal of this project is to reinforce the user's knowledge about the locations of the 50 United States. Additionaly, we've information about these states such as state capital, nickname, and a hand-selected image representing the state to so that more than just geography is covered.
 
+*Video Demo
+
+https://www.youtube.com/watch?v=SgrQfCzyd_o
+
 *Instructions
 
 A live version of the application can be found here: https://us-game-alien.herokuapp.com/play, otherwise follow the instructions below
