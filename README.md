@@ -32,4 +32,6 @@ A live version of the application can be found here: https://us-game-alien.herok
     - I strongly suggest that you do not use a password that you use for any other site
   b) Re-size your window to ensure that the image of the UFO in the upper right is on top of the grey shadow beneath it
     - Aim to have as little of the grey shadow showing as possible
-  c) The game will begin, and will not end until all 50 states are guessed correctly.   
+  c) The game will begin, and will not end until all 50 states are guessed correctly.  
+  
+  ![test gif](https://gph.is/g/4Mov0rB)
