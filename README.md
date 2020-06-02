@@ -34,4 +34,4 @@ A live version of the application can be found here: https://us-game-alien.herok
     - Aim to have as little of the grey shadow showing as possible
   c) The game will begin, and will not end until all 50 states are guessed correctly.  
   
-<iframe src="https://giphy.com/embed/QuzD7OhY2Kt5xgUxRR" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/QuzD7OhY2Kt5xgUxRR">via GIPHY</a></p>
+![](https://giphy.com/gifs/QuzD7OhY2Kt5xgUxRR/html5)
