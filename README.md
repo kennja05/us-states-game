@@ -24,7 +24,7 @@ A live version of the application can be found here: **https://us-game-alien.her
 
     a) The repo for the backend can be found here: https://github.com/alyon4a/us-states-api
   
-      -Follow the instructions there to set up the back end
+      - *Follow the instructions located there to set up the back end*
     
     b) Clone this repo and run the command `cd us-states-game` in your terminal
   
